@@ -127,7 +127,7 @@ function NavSection({
           return (
             <li key={href}>
               <Link
-                to={href}
+                to={href as string}
                 className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition ${
                   active
                     ? "bg-gold/10 text-gold border-l-2 border-gold pl-[10px]"
