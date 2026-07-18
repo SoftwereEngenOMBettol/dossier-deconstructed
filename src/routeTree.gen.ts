@@ -9,38 +9,129 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppSettingsRouteImport } from './routes/_app.settings'
+import { Route as AppCertificatesRouteImport } from './routes/_app.certificates'
+import { Route as AppArchiveRouteImport } from './routes/_app.archive'
+import { Route as AppAchievementsRouteImport } from './routes/_app.achievements'
+import { Route as AppCaseCaseIdIndexRouteImport } from './routes/_app.case.$caseId.index'
+import { Route as AppCaseCaseIdSectionRouteImport } from './routes/_app.case.$caseId.$section'
 
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCertificatesRoute = AppCertificatesRouteImport.update({
+  id: '/certificates',
+  path: '/certificates',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppArchiveRoute = AppArchiveRouteImport.update({
+  id: '/archive',
+  path: '/archive',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAchievementsRoute = AppAchievementsRouteImport.update({
+  id: '/achievements',
+  path: '/achievements',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCaseCaseIdIndexRoute = AppCaseCaseIdIndexRouteImport.update({
+  id: '/case/$caseId/',
+  path: '/case/$caseId/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCaseCaseIdSectionRoute = AppCaseCaseIdSectionRouteImport.update({
+  id: '/case/$caseId/$section',
+  path: '/case/$caseId/$section',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/achievements': typeof AppAchievementsRoute
+  '/archive': typeof AppArchiveRoute
+  '/certificates': typeof AppCertificatesRoute
+  '/settings': typeof AppSettingsRoute
+  '/case/$caseId/$section': typeof AppCaseCaseIdSectionRoute
+  '/case/$caseId/': typeof AppCaseCaseIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/achievements': typeof AppAchievementsRoute
+  '/archive': typeof AppArchiveRoute
+  '/certificates': typeof AppCertificatesRoute
+  '/settings': typeof AppSettingsRoute
+  '/case/$caseId/$section': typeof AppCaseCaseIdSectionRoute
+  '/case/$caseId': typeof AppCaseCaseIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/_app/achievements': typeof AppAchievementsRoute
+  '/_app/archive': typeof AppArchiveRoute
+  '/_app/certificates': typeof AppCertificatesRoute
+  '/_app/settings': typeof AppSettingsRoute
+  '/_app/case/$caseId/$section': typeof AppCaseCaseIdSectionRoute
+  '/_app/case/$caseId/': typeof AppCaseCaseIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/achievements'
+    | '/archive'
+    | '/certificates'
+    | '/settings'
+    | '/case/$caseId/$section'
+    | '/case/$caseId/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/achievements'
+    | '/archive'
+    | '/certificates'
+    | '/settings'
+    | '/case/$caseId/$section'
+    | '/case/$caseId'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/_app/achievements'
+    | '/_app/archive'
+    | '/_app/certificates'
+    | '/_app/settings'
+    | '/_app/case/$caseId/$section'
+    | '/_app/case/$caseId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +139,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/settings': {
+      id: '/_app/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/certificates': {
+      id: '/_app/certificates'
+      path: '/certificates'
+      fullPath: '/certificates'
+      preLoaderRoute: typeof AppCertificatesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/archive': {
+      id: '/_app/archive'
+      path: '/archive'
+      fullPath: '/archive'
+      preLoaderRoute: typeof AppArchiveRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/achievements': {
+      id: '/_app/achievements'
+      path: '/achievements'
+      fullPath: '/achievements'
+      preLoaderRoute: typeof AppAchievementsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/case/$caseId/': {
+      id: '/_app/case/$caseId/'
+      path: '/case/$caseId'
+      fullPath: '/case/$caseId/'
+      preLoaderRoute: typeof AppCaseCaseIdIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/case/$caseId/$section': {
+      id: '/_app/case/$caseId/$section'
+      path: '/case/$caseId/$section'
+      fullPath: '/case/$caseId/$section'
+      preLoaderRoute: typeof AppCaseCaseIdSectionRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAchievementsRoute: typeof AppAchievementsRoute
+  AppArchiveRoute: typeof AppArchiveRoute
+  AppCertificatesRoute: typeof AppCertificatesRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppCaseCaseIdSectionRoute: typeof AppCaseCaseIdSectionRoute
+  AppCaseCaseIdIndexRoute: typeof AppCaseCaseIdIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAchievementsRoute: AppAchievementsRoute,
+  AppArchiveRoute: AppArchiveRoute,
+  AppCertificatesRoute: AppCertificatesRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppCaseCaseIdSectionRoute: AppCaseCaseIdSectionRoute,
+  AppCaseCaseIdIndexRoute: AppCaseCaseIdIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
