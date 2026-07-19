@@ -16,6 +16,8 @@ import { Route as AppCertificatesRouteImport } from './routes/_app.certificates'
 import { Route as AppArchiveRouteImport } from './routes/_app.archive'
 import { Route as AppAchievementsRouteImport } from './routes/_app.achievements'
 import { Route as AppCaseCaseIdIndexRouteImport } from './routes/_app.case.$caseId.index'
+import { Route as AppCaseCaseIdSubmitRouteImport } from './routes/_app.case.$caseId.submit'
+import { Route as AppCaseCaseIdCertificateRouteImport } from './routes/_app.case.$caseId.certificate'
 import { Route as AppCaseCaseIdSectionRouteImport } from './routes/_app.case.$caseId.$section'
 
 const AppRoute = AppRouteImport.update({
@@ -52,6 +54,17 @@ const AppCaseCaseIdIndexRoute = AppCaseCaseIdIndexRouteImport.update({
   path: '/case/$caseId/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppCaseCaseIdSubmitRoute = AppCaseCaseIdSubmitRouteImport.update({
+  id: '/case/$caseId/submit',
+  path: '/case/$caseId/submit',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCaseCaseIdCertificateRoute =
+  AppCaseCaseIdCertificateRouteImport.update({
+    id: '/case/$caseId/certificate',
+    path: '/case/$caseId/certificate',
+    getParentRoute: () => AppRoute,
+  } as any)
 const AppCaseCaseIdSectionRoute = AppCaseCaseIdSectionRouteImport.update({
   id: '/case/$caseId/$section',
   path: '/case/$caseId/$section',
@@ -65,6 +78,8 @@ export interface FileRoutesByFullPath {
   '/certificates': typeof AppCertificatesRoute
   '/settings': typeof AppSettingsRoute
   '/case/$caseId/$section': typeof AppCaseCaseIdSectionRoute
+  '/case/$caseId/certificate': typeof AppCaseCaseIdCertificateRoute
+  '/case/$caseId/submit': typeof AppCaseCaseIdSubmitRoute
   '/case/$caseId/': typeof AppCaseCaseIdIndexRoute
 }
 export interface FileRoutesByTo {
@@ -74,6 +89,8 @@ export interface FileRoutesByTo {
   '/certificates': typeof AppCertificatesRoute
   '/settings': typeof AppSettingsRoute
   '/case/$caseId/$section': typeof AppCaseCaseIdSectionRoute
+  '/case/$caseId/certificate': typeof AppCaseCaseIdCertificateRoute
+  '/case/$caseId/submit': typeof AppCaseCaseIdSubmitRoute
   '/case/$caseId': typeof AppCaseCaseIdIndexRoute
 }
 export interface FileRoutesById {
@@ -85,6 +102,8 @@ export interface FileRoutesById {
   '/_app/certificates': typeof AppCertificatesRoute
   '/_app/settings': typeof AppSettingsRoute
   '/_app/case/$caseId/$section': typeof AppCaseCaseIdSectionRoute
+  '/_app/case/$caseId/certificate': typeof AppCaseCaseIdCertificateRoute
+  '/_app/case/$caseId/submit': typeof AppCaseCaseIdSubmitRoute
   '/_app/case/$caseId/': typeof AppCaseCaseIdIndexRoute
 }
 export interface FileRouteTypes {
@@ -96,6 +115,8 @@ export interface FileRouteTypes {
     | '/certificates'
     | '/settings'
     | '/case/$caseId/$section'
+    | '/case/$caseId/certificate'
+    | '/case/$caseId/submit'
     | '/case/$caseId/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -105,6 +126,8 @@ export interface FileRouteTypes {
     | '/certificates'
     | '/settings'
     | '/case/$caseId/$section'
+    | '/case/$caseId/certificate'
+    | '/case/$caseId/submit'
     | '/case/$caseId'
   id:
     | '__root__'
@@ -115,6 +138,8 @@ export interface FileRouteTypes {
     | '/_app/certificates'
     | '/_app/settings'
     | '/_app/case/$caseId/$section'
+    | '/_app/case/$caseId/certificate'
+    | '/_app/case/$caseId/submit'
     | '/_app/case/$caseId/'
   fileRoutesById: FileRoutesById
 }
@@ -174,6 +199,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppCaseCaseIdIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/case/$caseId/submit': {
+      id: '/_app/case/$caseId/submit'
+      path: '/case/$caseId/submit'
+      fullPath: '/case/$caseId/submit'
+      preLoaderRoute: typeof AppCaseCaseIdSubmitRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/case/$caseId/certificate': {
+      id: '/_app/case/$caseId/certificate'
+      path: '/case/$caseId/certificate'
+      fullPath: '/case/$caseId/certificate'
+      preLoaderRoute: typeof AppCaseCaseIdCertificateRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/case/$caseId/$section': {
       id: '/_app/case/$caseId/$section'
       path: '/case/$caseId/$section'
@@ -190,6 +229,8 @@ interface AppRouteChildren {
   AppCertificatesRoute: typeof AppCertificatesRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppCaseCaseIdSectionRoute: typeof AppCaseCaseIdSectionRoute
+  AppCaseCaseIdCertificateRoute: typeof AppCaseCaseIdCertificateRoute
+  AppCaseCaseIdSubmitRoute: typeof AppCaseCaseIdSubmitRoute
   AppCaseCaseIdIndexRoute: typeof AppCaseCaseIdIndexRoute
 }
 
@@ -199,6 +240,8 @@ const AppRouteChildren: AppRouteChildren = {
   AppCertificatesRoute: AppCertificatesRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppCaseCaseIdSectionRoute: AppCaseCaseIdSectionRoute,
+  AppCaseCaseIdCertificateRoute: AppCaseCaseIdCertificateRoute,
+  AppCaseCaseIdSubmitRoute: AppCaseCaseIdSubmitRoute,
   AppCaseCaseIdIndexRoute: AppCaseCaseIdIndexRoute,
 }
 
