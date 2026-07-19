@@ -4,12 +4,14 @@ import type { CaseEntry } from "@/lib/catalog";
 interface Props {
   entry: CaseEntry;
   onClick: (entry: CaseEntry) => void;
+  owned?: boolean;
+  progress?: number | null;
 }
 
-export function CaseCard({ entry, onClick }: Props) {
+export function CaseCard({ entry, onClick, owned = false, progress = null }: Props) {
   const isComing = entry.status === "coming-soon";
-  const isOwned = entry.status === "owned";
-  const isLocked = entry.status === "locked";
+  const isOwned = owned;
+  const isLocked = !isOwned && entry.status === "locked";
 
   if (isComing) {
     return (
