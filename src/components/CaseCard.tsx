@@ -113,16 +113,16 @@ export function CaseCard({ entry, onClick, owned = false, progress = null }: Pro
           </ul>
         )}
 
-        {isOwned && entry.progress != null && (
+        {isOwned && progress != null && (
           <div className="mt-4">
             <div className="flex items-center justify-between text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
               <span>Progress</span>
-              <span className="text-gold">{entry.progress}%</span>
+              <span className="text-gold">{progress}%</span>
             </div>
             <div className="h-1 overflow-hidden rounded-full bg-surface-2">
               <div
                 className="h-full bg-gradient-to-r from-gold-deep to-gold"
-                style={{ width: `${entry.progress}%` }}
+                style={{ width: `${progress}%` }}
               />
             </div>
           </div>
