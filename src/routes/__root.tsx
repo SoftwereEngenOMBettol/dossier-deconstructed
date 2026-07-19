@@ -125,9 +125,11 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { Toaster } = require("sonner");
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <Toaster theme="dark" position="top-right" richColors />
     </QueryClientProvider>
   );
 }
