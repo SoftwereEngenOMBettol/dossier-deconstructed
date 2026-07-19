@@ -1,6 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { getCase } from "@/lib/catalog";
-import { FolderOpen, Camera, Archive, Users, UserCheck, Clock, Notebook, FileCheck } from "lucide-react";
+import { useStoredCase } from "@/lib/store";
+import { resolveAsset } from "@/lib/casepack";
+import {
+  FolderOpen, Camera, Archive, Users, UserCheck, Clock, Notebook, FileCheck, Award, Lock,
+} from "lucide-react";
 
 export const Route = createFileRoute("/_app/case/$caseId/")({
   head: ({ params }) => {
@@ -23,13 +27,34 @@ const SECTIONS = [
   { label: "Witnesses", icon: UserCheck, to: "witnesses", desc: "Statements — some may contradict." },
   { label: "Timeline", icon: Clock, to: "timeline", desc: "Reconstruct the sequence of events." },
   { label: "My Notebook", icon: Notebook, to: "notebook", desc: "Your private detective log." },
+  { label: "Submit Investigation", icon: Award, to: "submit", desc: "File your final report and earn a certificate." },
 ];
 
 function CaseFile() {
   const { caseId } = Route.useParams();
   const c = getCase(caseId);
+  const { case: stored, ready } = useStoredCase(c?.packId);
 
   if (!c) return <div className="p-10">Case not found.</div>;
+
+  if (ready && !stored) {
+    return (
+      <div className="mx-auto max-w-3xl px-8 py-20 text-center">
+        <Lock className="h-10 w-10 text-gold mx-auto mb-4" />
+        <h1 className="font-display text-3xl uppercase tracking-widest text-gold-gradient">
+          Case Locked
+        </h1>
+        <p className="mt-3 text-muted-foreground">
+          Purchase <b>{c.code} — {c.title}</b> on Gumroad, then import the <code>.casepack</code> file from the Archive to unlock this investigation.
+        </p>
+        <Link to="/archive" className="mt-6 inline-block rounded-md bg-gradient-to-b from-gold to-gold-deep px-4 py-2 text-sm font-semibold uppercase tracking-widest text-background">
+          Back to Archive
+        </Link>
+      </div>
+    );
+  }
+
+  const cover = stored ? resolveAsset(stored.assets, stored.manifest.cover) ?? c.cover : c.cover;
 
   return (
     <div className="mx-auto max-w-[1500px] px-8 py-10">
@@ -37,23 +62,14 @@ function CaseFile() {
         <div className="flex items-center gap-4">
           <FolderOpen className="h-8 w-8 text-gold" />
           <div>
-            <h1 className="font-display text-3xl tracking-widest uppercase text-gold-gradient">
-              Case File
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              {c.code} — {c.title}
-            </p>
+            <h1 className="font-display text-3xl tracking-widest uppercase text-gold-gradient">Case File</h1>
+            <p className="text-sm text-muted-foreground">{c.code} — {c.title}</p>
           </div>
-        </div>
-        <div className="text-right text-xs uppercase tracking-widest text-muted-foreground">
-          <div>Progress</div>
-          <div className="mt-1 font-display text-3xl text-gold">{c.progress ?? 0}%</div>
         </div>
       </div>
 
-      {/* Hero */}
       <div className="relative overflow-hidden rounded-xl border border-border">
-        <img src={c.cover} alt={c.title} className="w-full h-[320px] object-cover" />
+        <img src={cover} alt={c.title} className="w-full h-[320px] object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
         <div className="absolute bottom-0 left-0 p-8">
           <div className="text-xs uppercase tracking-[0.28em] text-gold mb-2">
@@ -64,18 +80,16 @@ function CaseFile() {
         </div>
       </div>
 
-      {/* Sections grid */}
       <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {SECTIONS.map(({ label, icon: Icon, to, desc }) => (
           <Link
             key={to}
-            to={`/case/${c.id}/${to}`}
+            to="/case/$caseId/$section"
+            params={{ caseId: c.id, section: to }}
             className="group rounded-lg border border-border bg-card/70 p-5 hover:border-gold/50 hover:bg-card transition"
           >
             <Icon className="h-6 w-6 text-gold mb-3" />
-            <div className="font-display text-lg uppercase tracking-widest text-foreground group-hover:text-gold transition">
-              {label}
-            </div>
+            <div className="font-display text-lg uppercase tracking-widest group-hover:text-gold transition">{label}</div>
             <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{desc}</p>
           </Link>
         ))}

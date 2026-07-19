@@ -4,12 +4,14 @@ import type { CaseEntry } from "@/lib/catalog";
 interface Props {
   entry: CaseEntry;
   onClick: (entry: CaseEntry) => void;
+  owned?: boolean;
+  progress?: number | null;
 }
 
-export function CaseCard({ entry, onClick }: Props) {
+export function CaseCard({ entry, onClick, owned = false, progress = null }: Props) {
   const isComing = entry.status === "coming-soon";
-  const isOwned = entry.status === "owned";
-  const isLocked = entry.status === "locked";
+  const isOwned = owned;
+  const isLocked = !isOwned && entry.status === "locked";
 
   if (isComing) {
     return (
@@ -111,16 +113,16 @@ export function CaseCard({ entry, onClick }: Props) {
           </ul>
         )}
 
-        {isOwned && entry.progress != null && (
+        {isOwned && progress != null && (
           <div className="mt-4">
             <div className="flex items-center justify-between text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
               <span>Progress</span>
-              <span className="text-gold">{entry.progress}%</span>
+              <span className="text-gold">{progress}%</span>
             </div>
             <div className="h-1 overflow-hidden rounded-full bg-surface-2">
               <div
                 className="h-full bg-gradient-to-r from-gold-deep to-gold"
-                style={{ width: `${entry.progress}%` }}
+                style={{ width: `${progress}%` }}
               />
             </div>
           </div>
