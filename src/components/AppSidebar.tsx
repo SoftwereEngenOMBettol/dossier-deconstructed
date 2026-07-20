@@ -1,4 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import {
   FolderOpen,
   Camera,
@@ -13,6 +14,8 @@ import {
   Trophy,
   Settings,
   LogOut,
+  Menu,
+  X,
 } from "lucide-react";
 import logo from "@/assets/dx-logo.png";
 import type { DetectiveProfile } from "@/lib/session";
@@ -41,9 +44,35 @@ interface Props {
 
 export function AppSidebar({ profile, onLogout }: Props) {
   const { pathname } = useLocation();
+  const [open, setOpen] = useState(false);
 
-  return (
-    <aside className="flex h-screen w-[280px] flex-col border-r border-border bg-sidebar/95 backdrop-blur">
+  // Close drawer on route change
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  // Lock body scroll when drawer open
+  useEffect(() => {
+    if (open) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }
+  }, [open]);
+
+  const aside = (
+    <aside className="flex h-full w-[280px] flex-col border-r border-border bg-sidebar/95 backdrop-blur">
+      {/* Mobile close */}
+      <button
+        onClick={() => setOpen(false)}
+        className="md:hidden absolute top-3 right-3 h-8 w-8 grid place-items-center rounded-md border border-border text-muted-foreground hover:text-gold"
+        aria-label="Close menu"
+      >
+        <X className="h-4 w-4" />
+      </button>
+
       {/* Brand */}
       <Link to="/archive" className="flex items-center gap-3 px-6 pt-6 pb-4">
         <img src={logo} alt="Dossier X" className="h-14 w-14 object-contain" />
@@ -102,6 +131,41 @@ export function AppSidebar({ profile, onLogout }: Props) {
         </button>
       </div>
     </aside>
+  );
+
+  return (
+    <>
+      {/* Mobile top bar */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between border-b border-border bg-sidebar/95 backdrop-blur px-4 h-14">
+        <button
+          onClick={() => setOpen(true)}
+          className="h-9 w-9 grid place-items-center rounded-md border border-border text-gold"
+          aria-label="Open menu"
+        >
+          <Menu className="h-4 w-4" />
+        </button>
+        <Link to="/archive" className="font-display text-sm tracking-widest text-gold-gradient">
+          DOSSIER X
+        </Link>
+        <div className="h-9 w-9 rounded-full bg-gradient-to-br from-gold-deep to-surface-2 grid place-items-center font-display text-sm text-background">
+          {profile.name.charAt(0).toUpperCase()}
+        </div>
+      </div>
+
+      {/* Desktop sidebar */}
+      <div className="hidden md:block h-screen shrink-0">{aside}</div>
+
+      {/* Mobile drawer */}
+      {open && (
+        <div className="md:hidden fixed inset-0 z-50">
+          <div
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            onClick={() => setOpen(false)}
+          />
+          <div className="relative h-full w-[280px] max-w-[85vw]">{aside}</div>
+        </div>
+      )}
+    </>
   );
 }
 

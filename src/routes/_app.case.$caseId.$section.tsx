@@ -52,7 +52,7 @@ function Section() {
   if (!stored) return <div className="p-10 text-muted-foreground">Loading…</div>;
 
   return (
-    <div className="mx-auto max-w-[1500px] px-8 py-10">
+    <div className="mx-auto max-w-[1500px] px-4 sm:px-8 py-6 sm:py-10">
       <Link to="/case/$caseId" params={{ caseId }} className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground hover:text-gold mb-6">
         <ArrowLeft className="h-3.5 w-3.5" /> Back to case file
       </Link>

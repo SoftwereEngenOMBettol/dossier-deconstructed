@@ -57,7 +57,7 @@ function CaseFile() {
   const cover = stored ? resolveAsset(stored.assets, stored.manifest.cover) ?? c.cover : c.cover;
 
   return (
-    <div className="mx-auto max-w-[1500px] px-8 py-10">
+    <div className="mx-auto max-w-[1500px] px-4 sm:px-8 py-6 sm:py-10">
       <div className="flex items-start justify-between gap-8 mb-8">
         <div className="flex items-center gap-4">
           <FolderOpen className="h-8 w-8 text-gold" />

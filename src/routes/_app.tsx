@@ -20,7 +20,7 @@ function AppLayout() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex min-h-screen md:h-screen md:overflow-hidden">
       <AppSidebar
         profile={profile}
         onLogout={() => {
@@ -28,7 +28,7 @@ function AppLayout() {
           navigate({ to: "/", replace: true });
         }}
       />
-      <div className="flex-1 overflow-y-auto texture-grain">
+      <div className="flex-1 md:overflow-y-auto texture-grain pt-14 md:pt-0 w-full min-w-0">
         <Outlet />
       </div>
     </div>

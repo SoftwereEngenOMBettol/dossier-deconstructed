@@ -16,7 +16,7 @@ function CertificatesGallery() {
   const byId = new Map(certs.map((c) => [c.caseId.toUpperCase(), c]));
 
   return (
-    <div className="mx-auto max-w-[1500px] px-8 py-10">
+    <div className="mx-auto max-w-[1500px] px-4 sm:px-8 py-6 sm:py-10">
       <h1 className="font-display text-4xl uppercase tracking-widest text-gold-gradient">
         Certificates
       </h1>

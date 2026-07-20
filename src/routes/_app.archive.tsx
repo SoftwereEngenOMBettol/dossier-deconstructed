@@ -38,7 +38,7 @@ function Archive() {
   };
 
   return (
-    <div className="mx-auto max-w-[1500px] px-8 py-10">
+    <div className="mx-auto max-w-[1500px] px-4 sm:px-8 py-6 sm:py-10">
       <div className="flex items-start justify-between gap-6 mb-6 flex-wrap">
         <div>
           <h1 className="font-display text-4xl tracking-[0.12em] text-gold-gradient uppercase">
