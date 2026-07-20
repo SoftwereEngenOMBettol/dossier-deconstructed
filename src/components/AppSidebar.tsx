@@ -1,4 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import {
   FolderOpen,
   Camera,
@@ -13,6 +14,8 @@ import {
   Trophy,
   Settings,
   LogOut,
+  Menu,
+  X,
 } from "lucide-react";
 import logo from "@/assets/dx-logo.png";
 import type { DetectiveProfile } from "@/lib/session";
