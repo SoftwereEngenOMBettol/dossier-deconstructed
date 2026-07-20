@@ -44,9 +44,35 @@ interface Props {
 
 export function AppSidebar({ profile, onLogout }: Props) {
   const { pathname } = useLocation();
+  const [open, setOpen] = useState(false);
 
-  return (
-    <aside className="flex h-screen w-[280px] flex-col border-r border-border bg-sidebar/95 backdrop-blur">
+  // Close drawer on route change
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  // Lock body scroll when drawer open
+  useEffect(() => {
+    if (open) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }
+  }, [open]);
+
+  const aside = (
+    <aside className="flex h-full w-[280px] flex-col border-r border-border bg-sidebar/95 backdrop-blur">
+      {/* Mobile close */}
+      <button
+        onClick={() => setOpen(false)}
+        className="md:hidden absolute top-3 right-3 h-8 w-8 grid place-items-center rounded-md border border-border text-muted-foreground hover:text-gold"
+        aria-label="Close menu"
+      >
+        <X className="h-4 w-4" />
+      </button>
+
       {/* Brand */}
       <Link to="/archive" className="flex items-center gap-3 px-6 pt-6 pb-4">
         <img src={logo} alt="Dossier X" className="h-14 w-14 object-contain" />
