@@ -132,6 +132,41 @@ export function AppSidebar({ profile, onLogout }: Props) {
       </div>
     </aside>
   );
+
+  return (
+    <>
+      {/* Mobile top bar */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between border-b border-border bg-sidebar/95 backdrop-blur px-4 h-14">
+        <button
+          onClick={() => setOpen(true)}
+          className="h-9 w-9 grid place-items-center rounded-md border border-border text-gold"
+          aria-label="Open menu"
+        >
+          <Menu className="h-4 w-4" />
+        </button>
+        <Link to="/archive" className="font-display text-sm tracking-widest text-gold-gradient">
+          DOSSIER X
+        </Link>
+        <div className="h-9 w-9 rounded-full bg-gradient-to-br from-gold-deep to-surface-2 grid place-items-center font-display text-sm text-background">
+          {profile.name.charAt(0).toUpperCase()}
+        </div>
+      </div>
+
+      {/* Desktop sidebar */}
+      <div className="hidden md:block h-screen shrink-0">{aside}</div>
+
+      {/* Mobile drawer */}
+      {open && (
+        <div className="md:hidden fixed inset-0 z-50">
+          <div
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            onClick={() => setOpen(false)}
+          />
+          <div className="relative h-full w-[280px] max-w-[85vw]">{aside}</div>
+        </div>
+      )}
+    </>
+  );
 }
 
 function NavSection({
