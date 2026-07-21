@@ -159,9 +159,13 @@ function EvidenceView({ stored }: { stored: StoredCase }) {
             <div className="text-[10px] uppercase tracking-widest text-paper-ink/60">Evidence · {sel.id}</div>
             <h3 className="font-display text-xl text-paper-ink mt-1">{sel.title}</h3>
             <div className="text-[10px] uppercase tracking-widest text-stamp-red mt-2">{sel.type} · {sel.location}</div>
-            <img
-              src={resolveAsset(stored.assets, sel.image) || placeholderFor("evidence", `${stored.id}-${sel.id}`, sel.title || sel.id, sel.type)}
-              className="mt-3 rounded border-2 border-paper-shadow"
+            <Img
+              src={resolveAsset(stored.assets, sel.image)}
+              fallbackKind="evidence"
+              fallbackSeed={`${stored.id}-${sel.id}`}
+              fallbackLabel={sel.title || sel.id}
+              fallbackSub={sel.type}
+              className="mt-3 rounded border-2 border-paper-shadow w-full"
             />
             <p className="mt-3 text-sm text-paper-ink/90 leading-relaxed">{sel.description}</p>
           </>
