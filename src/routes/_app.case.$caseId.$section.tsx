@@ -4,6 +4,7 @@ import { ArrowLeft, ChevronRight, Search } from "lucide-react";
 import { getCase } from "@/lib/catalog";
 import { useStoredCase, type StoredCase, notebookKey } from "@/lib/store";
 import { resolveAsset } from "@/lib/casepack";
+import { placeholderFor } from "@/lib/placeholder";
 import { PaperDocument } from "@/components/PaperDocument";
 
 type PageId =
@@ -88,12 +89,11 @@ function CrimeSceneView({ stored }: { stored: StoredCase }) {
           <p className="mt-2 text-sm text-paper-ink/90 leading-relaxed">{scene.description}</p>
         </div>
         <div className="grid grid-cols-2 gap-4">
-          {photos.length === 0 && <div className="col-span-2 text-muted-foreground text-sm">No scene photos in this casepack.</div>}
-          {photos.map((p, i) => {
-            const url = resolveAsset(stored.assets, p);
+          {(photos.length ? photos : [null, null, null, null]).map((p, i) => {
+            const url = (p && resolveAsset(stored.assets, p)) || placeholderFor("scene", `${stored.id}-scene-${i}`, scene.name || "Crime Scene");
             return (
-              <button key={i} onClick={() => url && setZoom(url)} className="group relative overflow-hidden rounded-lg border border-border">
-                {url ? <img src={url} className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition duration-500" /> : <div className="aspect-[4/3] bg-surface" />}
+              <button key={i} onClick={() => setZoom(url)} className="group relative overflow-hidden rounded-lg border border-border">
+                <img src={url} className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition duration-500" />
                 <div className="absolute bottom-2 left-2 rounded bg-background/80 px-2 py-0.5 font-mono text-[10px] text-gold">#{i + 1}</div>
               </button>
             );
@@ -124,11 +124,11 @@ function EvidenceView({ stored }: { stored: StoredCase }) {
     <div className="grid grid-cols-1 lg:grid-cols-[1fr,380px] gap-6">
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {items.map((e: any) => {
-          const url = resolveAsset(stored.assets, e.image);
+          const url = resolveAsset(stored.assets, e.image) || placeholderFor("evidence", `${stored.id}-${e.id}`, e.title || e.id, e.type);
           const active = sel?.id === e.id;
           return (
             <button key={e.id} onClick={() => setSel(e)} className={`text-left rounded-lg border overflow-hidden transition ${active ? "border-gold shadow-gold" : "border-border hover:border-gold/40"}`}>
-              {url ? <img src={url} className="w-full aspect-square object-cover" /> : <div className="aspect-square bg-surface" />}
+              <img src={url} className="w-full aspect-square object-cover" />
               <div className="p-3">
                 <div className="text-[10px] font-mono tracking-widest text-gold">{e.id}</div>
                 <div className="font-display text-sm uppercase tracking-wider mt-1">{e.title}</div>
@@ -144,9 +144,10 @@ function EvidenceView({ stored }: { stored: StoredCase }) {
             <div className="text-[10px] uppercase tracking-widest text-paper-ink/60">Evidence · {sel.id}</div>
             <h3 className="font-display text-xl text-paper-ink mt-1">{sel.title}</h3>
             <div className="text-[10px] uppercase tracking-widest text-stamp-red mt-2">{sel.type} · {sel.location}</div>
-            {resolveAsset(stored.assets, sel.image) && (
-              <img src={resolveAsset(stored.assets, sel.image)} className="mt-3 rounded border-2 border-paper-shadow" />
-            )}
+            <img
+              src={resolveAsset(stored.assets, sel.image) || placeholderFor("evidence", `${stored.id}-${sel.id}`, sel.title || sel.id, sel.type)}
+              className="mt-3 rounded border-2 border-paper-shadow"
+            />
             <p className="mt-3 text-sm text-paper-ink/90 leading-relaxed">{sel.description}</p>
           </>
         ) : (
@@ -191,11 +192,11 @@ function SuspectsView({ stored }: { stored: StoredCase }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
       {items.map((s: any) => {
-        const url = resolveAsset(stored.assets, s.photo);
+        const url = resolveAsset(stored.assets, s.photo) || placeholderFor("portrait", `${stored.id}-${s.id}`, s.name || s.id, s.occupation || "Suspect");
         return (
           <article key={s.id} className="rounded-lg border border-border bg-card/70 overflow-hidden">
             <div className="grid grid-cols-[120px,1fr]">
-              {url ? <img src={url} className="w-full h-full object-cover" /> : <div className="bg-surface" />}
+              <img src={url} className="w-full h-full object-cover" />
               <div className="p-4">
                 <div className="text-[10px] font-mono tracking-widest text-gold">{s.id}</div>
                 <div className="font-display text-lg uppercase tracking-wider">{s.name}</div>
@@ -223,11 +224,11 @@ function WitnessesView({ stored }: { stored: StoredCase }) {
     <div className="grid grid-cols-1 lg:grid-cols-[1fr,420px] gap-6">
       <div className="rounded-lg border border-border bg-card/60 overflow-hidden">
         {items.map((w: any) => {
-          const url = resolveAsset(stored.assets, w.photo);
+          const url = resolveAsset(stored.assets, w.photo) || placeholderFor("witness", `${stored.id}-${w.id}`, w.name || w.id, "Witness");
           const active = sel?.id === w.id;
           return (
             <button key={w.id} onClick={() => setSel(w)} className={`w-full flex items-center gap-4 p-4 border-b border-border last:border-b-0 text-left transition ${active ? "bg-gold/10" : "hover:bg-surface"}`}>
-              {url ? <img src={url} className="h-14 w-14 rounded-full object-cover border border-border" /> : <div className="h-14 w-14 rounded-full bg-surface" />}
+              <img src={url} className="h-14 w-14 rounded-full object-cover border border-border" />
               <div className="flex-1">
                 <div className="font-display text-base uppercase tracking-wider">{w.name}</div>
                 <div className="text-xs text-muted-foreground">Reliability {w.reliability}%</div>

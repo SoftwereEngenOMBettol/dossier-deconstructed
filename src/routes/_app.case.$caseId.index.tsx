@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { getCase } from "@/lib/catalog";
 import { useStoredCase } from "@/lib/store";
 import { resolveAsset } from "@/lib/casepack";
+import { placeholderFor } from "@/lib/placeholder";
 import {
   FolderOpen, Camera, Archive, Users, UserCheck, Clock, Notebook, FileCheck, Award, Lock,
 } from "lucide-react";
@@ -54,7 +55,7 @@ function CaseFile() {
     );
   }
 
-  const cover = stored ? resolveAsset(stored.assets, stored.manifest.cover) ?? c.cover : c.cover;
+  const cover = (stored ? resolveAsset(stored.assets, stored.manifest.cover) : undefined) || c.cover || placeholderFor("cover", c.id, c.title);
 
   return (
     <div className="mx-auto max-w-[1500px] px-4 sm:px-8 py-6 sm:py-10">
