@@ -91,10 +91,17 @@ function CrimeSceneView({ stored }: { stored: StoredCase }) {
         </div>
         <div className="grid grid-cols-2 gap-4">
           {(photos.length ? photos : [null, null, null, null]).map((p, i) => {
-            const url = (p && resolveAsset(stored.assets, p)) || placeholderFor("scene", `${stored.id}-scene-${i}`, scene.name || "Crime Scene");
+            const url = (p && resolveAsset(stored.assets, p)) || undefined;
+            const ph = placeholderFor("scene", `${stored.id}-scene-${i}`, scene.name || "Crime Scene");
             return (
-              <button key={i} onClick={() => setZoom(url)} className="group relative overflow-hidden rounded-lg border border-border">
-                <img src={url} className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition duration-500" />
+              <button key={i} onClick={() => setZoom(url || ph)} className="group relative overflow-hidden rounded-lg border border-border">
+                <Img
+                  src={url}
+                  fallbackKind="scene"
+                  fallbackSeed={`${stored.id}-scene-${i}`}
+                  fallbackLabel={scene.name || "Crime Scene"}
+                  className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition duration-500"
+                />
                 <div className="absolute bottom-2 left-2 rounded bg-background/80 px-2 py-0.5 font-mono text-[10px] text-gold">#{i + 1}</div>
               </button>
             );
