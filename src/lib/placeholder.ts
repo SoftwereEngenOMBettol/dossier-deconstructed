@@ -28,7 +28,13 @@ function initials(name: string): string {
 }
 
 function encode(svg: string): string {
-  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+  const clean = svg.replace(/<\?xml[^>]*\?>/g, "").trim();
+  // Base64 for maximum browser compatibility (headless Chromium sometimes
+  // rejects URI-encoded SVGs with certain characters).
+  if (typeof btoa === "function") {
+    return `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(clean)))}`;
+  }
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(clean)}`;
 }
 
 const NOIR_BG = "#0f0d0a";
