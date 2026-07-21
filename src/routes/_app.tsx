@@ -1,15 +1,23 @@
 import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { AppSidebar } from "@/components/AppSidebar";
-import { clearProfile, useProfile } from "@/lib/session";
+import { ProfileProvider, useProfile } from "@/lib/session";
 
 export const Route = createFileRoute("/_app")({
   component: AppLayout,
 });
 
 function AppLayout() {
+  return (
+    <ProfileProvider>
+      <AppLayoutInner />
+    </ProfileProvider>
+  );
+}
+
+function AppLayoutInner() {
   const navigate = useNavigate();
-  const { profile, ready } = useProfile();
+  const { profile, ready, setProfile } = useProfile();
 
   useEffect(() => {
     if (ready && !profile) navigate({ to: "/", replace: true });
@@ -24,7 +32,7 @@ function AppLayout() {
       <AppSidebar
         profile={profile}
         onLogout={() => {
-          clearProfile();
+          setProfile(null);
           navigate({ to: "/", replace: true });
         }}
       />

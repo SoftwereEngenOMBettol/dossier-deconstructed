@@ -13,6 +13,7 @@ import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppSettingsRouteImport } from './routes/_app.settings'
 import { Route as AppCertificatesRouteImport } from './routes/_app.certificates'
+import { Route as AppCasepacksRouteImport } from './routes/_app.casepacks'
 import { Route as AppArchiveRouteImport } from './routes/_app.archive'
 import { Route as AppAchievementsRouteImport } from './routes/_app.achievements'
 import { Route as AppCaseCaseIdIndexRouteImport } from './routes/_app.case.$caseId.index'
@@ -37,6 +38,11 @@ const AppSettingsRoute = AppSettingsRouteImport.update({
 const AppCertificatesRoute = AppCertificatesRouteImport.update({
   id: '/certificates',
   path: '/certificates',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCasepacksRoute = AppCasepacksRouteImport.update({
+  id: '/casepacks',
+  path: '/casepacks',
   getParentRoute: () => AppRoute,
 } as any)
 const AppArchiveRoute = AppArchiveRouteImport.update({
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/achievements': typeof AppAchievementsRoute
   '/archive': typeof AppArchiveRoute
+  '/casepacks': typeof AppCasepacksRoute
   '/certificates': typeof AppCertificatesRoute
   '/settings': typeof AppSettingsRoute
   '/case/$caseId/$section': typeof AppCaseCaseIdSectionRoute
@@ -86,6 +93,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/achievements': typeof AppAchievementsRoute
   '/archive': typeof AppArchiveRoute
+  '/casepacks': typeof AppCasepacksRoute
   '/certificates': typeof AppCertificatesRoute
   '/settings': typeof AppSettingsRoute
   '/case/$caseId/$section': typeof AppCaseCaseIdSectionRoute
@@ -99,6 +107,7 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/_app/achievements': typeof AppAchievementsRoute
   '/_app/archive': typeof AppArchiveRoute
+  '/_app/casepacks': typeof AppCasepacksRoute
   '/_app/certificates': typeof AppCertificatesRoute
   '/_app/settings': typeof AppSettingsRoute
   '/_app/case/$caseId/$section': typeof AppCaseCaseIdSectionRoute
@@ -112,6 +121,7 @@ export interface FileRouteTypes {
     | '/'
     | '/achievements'
     | '/archive'
+    | '/casepacks'
     | '/certificates'
     | '/settings'
     | '/case/$caseId/$section'
@@ -123,6 +133,7 @@ export interface FileRouteTypes {
     | '/'
     | '/achievements'
     | '/archive'
+    | '/casepacks'
     | '/certificates'
     | '/settings'
     | '/case/$caseId/$section'
@@ -135,6 +146,7 @@ export interface FileRouteTypes {
     | '/_app'
     | '/_app/achievements'
     | '/_app/archive'
+    | '/_app/casepacks'
     | '/_app/certificates'
     | '/_app/settings'
     | '/_app/case/$caseId/$section'
@@ -176,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/certificates'
       fullPath: '/certificates'
       preLoaderRoute: typeof AppCertificatesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/casepacks': {
+      id: '/_app/casepacks'
+      path: '/casepacks'
+      fullPath: '/casepacks'
+      preLoaderRoute: typeof AppCasepacksRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/archive': {
@@ -226,6 +245,7 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppAchievementsRoute: typeof AppAchievementsRoute
   AppArchiveRoute: typeof AppArchiveRoute
+  AppCasepacksRoute: typeof AppCasepacksRoute
   AppCertificatesRoute: typeof AppCertificatesRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppCaseCaseIdSectionRoute: typeof AppCaseCaseIdSectionRoute
@@ -237,6 +257,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppAchievementsRoute: AppAchievementsRoute,
   AppArchiveRoute: AppArchiveRoute,
+  AppCasepacksRoute: AppCasepacksRoute,
   AppCertificatesRoute: AppCertificatesRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppCaseCaseIdSectionRoute: AppCaseCaseIdSectionRoute,

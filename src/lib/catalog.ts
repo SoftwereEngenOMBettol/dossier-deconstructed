@@ -3,6 +3,8 @@ import dx002 from "@/assets/dx002-cover.jpg";
 import dx003Asset from "@/assets/dx003-cover.webp.asset.json";
 import dx004 from "@/assets/dx004-cover.jpg";
 import dx005 from "@/assets/dx005-cover.jpg";
+import dx006 from "@/assets/dx006-cover.jpg";
+import dx007 from "@/assets/dx007-cover.jpg";
 
 export type Difficulty = 1 | 2 | 3 | 4 | 5;
 
@@ -119,18 +121,39 @@ export const CATALOG: CaseEntry[] = [
     id: "dx-006",
     code: "DX-006",
     packId: "DX006",
-    title: "Coming Soon",
-    tagline: "New case coming soon.",
-    description: "A new investigation is being assembled.",
-    cover: "",
-    difficulty: 3,
-    playMinutes: [60, 90],
-    evidenceCount: 0,
-    witnessCount: 0,
-    documentsCount: 0,
-    photosCount: 0,
-    gumroadUrl: "",
-    status: "coming-soon",
+    title: "Island Resort Mystery",
+    titleAr: "لغز الجزيرة",
+    tagline: "A private island resort. A tropical storm. One host, no way off, and a locked villa at dawn.",
+    description:
+      "A private island resort. A tropical storm. Nine guests, one host, no way off. In the morning the host is found dead in a locked overwater villa, and the tide is doing its best to erase everything.",
+    cover: dx006,
+    difficulty: 4,
+    playMinutes: [90, 110],
+    evidenceCount: 10,
+    witnessCount: 4,
+    documentsCount: 5,
+    photosCount: 3,
+    gumroadUrl: "https://gumroad.com/l/dx006",
+    status: "locked",
+  },
+  {
+    id: "dx-007",
+    code: "DX-007",
+    packId: "DX007",
+    title: "Hospital Conspiracy",
+    titleAr: "مؤامرة المستشفى",
+    tagline: "Four patients die on the same ward. Alone, each is plausible. Together, they are a confession.",
+    description:
+      "Four patients die on the same ward within eleven weeks. Each death, alone, is plausible. Together, they conceal a coordinated killing — and the truth behind the entire DOSSIER X series.",
+    cover: dx007,
+    difficulty: 5,
+    playMinutes: [120, 150],
+    evidenceCount: 10,
+    witnessCount: 4,
+    documentsCount: 5,
+    photosCount: 3,
+    gumroadUrl: "https://gumroad.com/l/dx007",
+    status: "locked",
   },
 ];
 
