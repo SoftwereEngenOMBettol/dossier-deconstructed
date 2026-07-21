@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { placeholderFor, type PlaceholderKind } from "@/lib/placeholder";
 
 interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
@@ -9,12 +9,6 @@ interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
   fallbackSub?: string;
 }
 
-/**
- * Image that falls back to a themed SVG placeholder when the source is
- * missing, or when the blob/URL fails to decode as an image. Casepacks
- * frequently ship without per-item photos — this keeps every UI slot art
- * directed.
- */
 export function Img({
   src,
   fallbackKind,
@@ -25,13 +19,15 @@ export function Img({
   ...rest
 }: Props) {
   const placeholder = placeholderFor(fallbackKind, fallbackSeed, fallbackLabel, fallbackSub);
-  const [current, setCurrent] = useState<string>(src || placeholder);
+  const [failed, setFailed] = useState(false);
+  useEffect(() => { setFailed(false); }, [src]);
+  const finalSrc = !src || failed ? placeholder : src;
   return (
     <img
       {...rest}
-      src={current}
+      src={finalSrc}
       onError={(e) => {
-        if (current !== placeholder) setCurrent(placeholder);
+        if (!failed) setFailed(true);
         onError?.(e);
       }}
     />
