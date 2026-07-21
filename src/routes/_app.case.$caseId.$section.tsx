@@ -5,6 +5,7 @@ import { getCase } from "@/lib/catalog";
 import { useStoredCase, type StoredCase, notebookKey } from "@/lib/store";
 import { resolveAsset } from "@/lib/casepack";
 import { placeholderFor } from "@/lib/placeholder";
+import { Img } from "@/components/Img";
 import { PaperDocument } from "@/components/PaperDocument";
 
 type PageId =
