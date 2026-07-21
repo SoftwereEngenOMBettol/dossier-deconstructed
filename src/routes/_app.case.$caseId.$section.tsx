@@ -250,11 +250,18 @@ function WitnessesView({ stored }: { stored: StoredCase }) {
     <div className="grid grid-cols-1 lg:grid-cols-[1fr,420px] gap-6">
       <div className="rounded-lg border border-border bg-card/60 overflow-hidden">
         {items.map((w: any) => {
-          const url = resolveAsset(stored.assets, w.photo) || placeholderFor("witness", `${stored.id}-${w.id}`, w.name || w.id, "Witness");
+          const url = resolveAsset(stored.assets, w.photo);
           const active = sel?.id === w.id;
           return (
             <button key={w.id} onClick={() => setSel(w)} className={`w-full flex items-center gap-4 p-4 border-b border-border last:border-b-0 text-left transition ${active ? "bg-gold/10" : "hover:bg-surface"}`}>
-              <img src={url} className="h-14 w-14 rounded-full object-cover border border-border" />
+              <Img
+                src={url}
+                fallbackKind="witness"
+                fallbackSeed={`${stored.id}-${w.id}`}
+                fallbackLabel={w.name || w.id}
+                fallbackSub="Witness"
+                className="h-14 w-14 rounded-full object-cover border border-border"
+              />
               <div className="flex-1">
                 <div className="font-display text-base uppercase tracking-wider">{w.name}</div>
                 <div className="text-xs text-muted-foreground">Reliability {w.reliability}%</div>
