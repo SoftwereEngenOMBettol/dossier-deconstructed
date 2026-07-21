@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export interface DetectiveProfile {
   name: string;
@@ -38,20 +38,40 @@ export function clearProfile() {
   localStorage.removeItem(KEY);
 }
 
-export function useProfile() {
-  const [profile, setProfile] = useState<DetectiveProfile | null>(null);
+interface ProfileContextValue {
+  profile: DetectiveProfile | null;
+  ready: boolean;
+  setProfile: (p: DetectiveProfile | null) => void;
+}
+
+const ProfileContext = createContext<ProfileContextValue | null>(null);
+
+export function ProfileProvider({ children }: { children: React.ReactNode }) {
+  const [profile, setProfileState] = useState<DetectiveProfile | null>(null);
   const [ready, setReady] = useState(false);
+
   useEffect(() => {
-    setProfile(loadProfile());
+    setProfileState(loadProfile());
     setReady(true);
   }, []);
-  return {
-    profile,
-    ready,
-    setProfile: (p: DetectiveProfile | null) => {
-      if (p) saveProfile(p);
-      else clearProfile();
-      setProfile(p);
-    },
+
+  const setProfile = (p: DetectiveProfile | null) => {
+    if (p) saveProfile(p);
+    else clearProfile();
+    setProfileState(p);
   };
+
+  return (
+    <ProfileContext.Provider value={{ profile, ready, setProfile }}>
+      {children}
+    </ProfileContext.Provider>
+  );
+}
+
+export function useProfile() {
+  const ctx = useContext(ProfileContext);
+  if (!ctx) {
+    throw new Error("useProfile must be used within a ProfileProvider");
+  }
+  return ctx;
 }
