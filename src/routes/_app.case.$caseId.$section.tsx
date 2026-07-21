@@ -132,11 +132,18 @@ function EvidenceView({ stored }: { stored: StoredCase }) {
     <div className="grid grid-cols-1 lg:grid-cols-[1fr,380px] gap-6">
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {items.map((e: any) => {
-          const url = resolveAsset(stored.assets, e.image) || placeholderFor("evidence", `${stored.id}-${e.id}`, e.title || e.id, e.type);
+          const url = resolveAsset(stored.assets, e.image);
           const active = sel?.id === e.id;
           return (
             <button key={e.id} onClick={() => setSel(e)} className={`text-left rounded-lg border overflow-hidden transition ${active ? "border-gold shadow-gold" : "border-border hover:border-gold/40"}`}>
-              <img src={url} className="w-full aspect-square object-cover" />
+              <Img
+                src={url}
+                fallbackKind="evidence"
+                fallbackSeed={`${stored.id}-${e.id}`}
+                fallbackLabel={e.title || e.id}
+                fallbackSub={e.type}
+                className="w-full aspect-square object-cover"
+              />
               <div className="p-3">
                 <div className="text-[10px] font-mono tracking-widest text-gold">{e.id}</div>
                 <div className="font-display text-sm uppercase tracking-wider mt-1">{e.title}</div>
