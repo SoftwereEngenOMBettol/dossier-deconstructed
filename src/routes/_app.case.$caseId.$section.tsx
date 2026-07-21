@@ -211,11 +211,18 @@ function SuspectsView({ stored }: { stored: StoredCase }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
       {items.map((s: any) => {
-        const url = resolveAsset(stored.assets, s.photo) || placeholderFor("portrait", `${stored.id}-${s.id}`, s.name || s.id, s.occupation || "Suspect");
+        const url = resolveAsset(stored.assets, s.photo);
         return (
           <article key={s.id} className="rounded-lg border border-border bg-card/70 overflow-hidden">
             <div className="grid grid-cols-[120px,1fr]">
-              <img src={url} className="w-full h-full object-cover" />
+              <Img
+                src={url}
+                fallbackKind="portrait"
+                fallbackSeed={`${stored.id}-${s.id}`}
+                fallbackLabel={s.name || s.id}
+                fallbackSub={s.occupation || "Suspect"}
+                className="w-full h-full object-cover"
+              />
               <div className="p-4">
                 <div className="text-[10px] font-mono tracking-widest text-gold">{s.id}</div>
                 <div className="font-display text-lg uppercase tracking-wider">{s.name}</div>
