@@ -79,6 +79,31 @@ export function PaperDocument({ doc, stored }: Props) {
         <div className="prose prose-sm max-w-none text-paper-ink font-serif leading-relaxed whitespace-pre-wrap">
           {body}
         </div>
+      ) : pdfUrl ? (
+        <div className="rounded border-2 border-paper-shadow bg-white/60 overflow-hidden">
+          <object
+            data={pdfUrl}
+            type="application/pdf"
+            className="w-full h-[720px] bg-white"
+          >
+            <iframe
+              src={pdfUrl}
+              title={doc.title}
+              className="w-full h-[720px] bg-white border-0"
+            />
+          </object>
+          <div className="flex items-center justify-between px-4 py-2 border-t border-paper-shadow text-[10px] uppercase tracking-widest text-paper-ink/70">
+            <span>Original document · embedded from casepack</span>
+            <a
+              href={pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-stamp-red hover:underline"
+            >
+              Open in new tab
+            </a>
+          </div>
+        </div>
       ) : (
         <div className="rounded border-2 border-dashed border-paper-shadow p-6 text-center">
           <FileText className="h-8 w-8 text-paper-ink/50 mx-auto mb-2" />
@@ -86,18 +111,8 @@ export function PaperDocument({ doc, stored }: Props) {
             {doc.type ?? "Report"} — {doc.title}
           </div>
           <p className="mt-2 text-sm text-paper-ink/70">
-            This document is provided as an attached file in the casepack.
+            No content available for this document.
           </p>
-          {pdfUrl && (
-            <a
-              href={pdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 rounded-md bg-gradient-to-b from-gold to-gold-deep px-4 py-2 text-xs font-semibold uppercase tracking-widest text-background"
-            >
-              Open original
-            </a>
-          )}
         </div>
       )}
 
