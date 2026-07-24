@@ -79,7 +79,11 @@ function Section() {
 /* ============ Crime Scene ============ */
 function CrimeSceneView({ stored }: { stored: StoredCase }) {
   const scene = stored.crime_scene ?? {};
-  const photos: string[] = Array.isArray(scene.photos) ? scene.photos : [];
+  const photos: string[] = Array.isArray(scene.photos)
+    ? scene.photos
+    : Array.isArray(scene.images)
+      ? scene.images
+      : [];
   const [zoom, setZoom] = useState<string | null>(null);
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1fr,340px] gap-8">
