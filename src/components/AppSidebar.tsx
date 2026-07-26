@@ -16,7 +16,6 @@ import {
   LogOut,
   Menu,
   X,
-  Download,
 } from "lucide-react";
 import logo from "@/assets/dx-logo.png";
 import type { DetectiveProfile } from "@/lib/session";
@@ -36,10 +35,6 @@ const NAV_INVESTIGATION = [
 const NAV_ACHIEVEMENTS = [
   { label: "Certificates", icon: Award, href: "/certificates" },
   { label: "Achievements", icon: Trophy, href: "/achievements" },
-];
-
-const NAV_DOWNLOADS = [
-  { label: "Casepacks", icon: Download, href: "/casepacks" },
 ];
 
 interface Props {
@@ -95,7 +90,6 @@ export function AppSidebar({ profile, onLogout }: Props) {
       <nav className="flex-1 overflow-y-auto px-3 py-2 space-y-6">
         <NavSection title="Investigation" items={NAV_INVESTIGATION} pathname={pathname} />
         <NavSection title="Achievements" items={NAV_ACHIEVEMENTS} pathname={pathname} />
-        <NavSection title="Downloads" items={NAV_DOWNLOADS} pathname={pathname} />
         <NavSection
           title=""
           items={[{ label: "Settings", icon: Settings, href: "/settings" }]}
