@@ -55,18 +55,18 @@ export function CaseCard({ entry, onClick, owned = false, progress = null }: Pro
           }`}
         />
         {/* Corner code */}
-        <div className="absolute top-3 left-3 rounded border border-gold/40 bg-background/80 px-2 py-1 font-mono text-[10px] tracking-widest text-gold backdrop-blur">
+        <div className="absolute top-2 left-2 rounded border border-gold/40 bg-background/80 px-1.5 py-0.5 font-mono text-[9px] tracking-widest text-gold backdrop-blur">
           {entry.code}
         </div>
         {/* Status pill */}
-        <div className="absolute top-3 right-3">
+        <div className="absolute top-2 right-2">
           {isOwned ? (
-            <div className="flex items-center gap-1 rounded border border-success/50 bg-success/15 px-2 py-1 text-[10px] font-semibold uppercase tracking-widest text-success">
-              <CheckCircle2 className="h-3 w-3" /> Owned
+            <div className="flex items-center gap-1 rounded border border-success/50 bg-success/15 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-success">
+              <CheckCircle2 className="h-2.5 w-2.5" /> Owned
             </div>
           ) : (
-            <div className="rounded border border-border bg-background/70 p-1.5 backdrop-blur">
-              <Lock className="h-3 w-3 text-muted-foreground" />
+            <div className="rounded border border-border bg-background/70 p-1 backdrop-blur">
+              <Lock className="h-2.5 w-2.5 text-muted-foreground" />
             </div>
           )}
         </div>
@@ -82,43 +82,43 @@ export function CaseCard({ entry, onClick, owned = false, progress = null }: Pro
       </div>
 
       {/* Body */}
-      <div className="p-4">
-        <h3 className="font-display text-xl uppercase tracking-wider text-foreground">
+      <div className="p-2.5 sm:p-3">
+        <h3 className="font-display text-sm sm:text-base uppercase tracking-wider text-foreground line-clamp-1">
           {entry.title}
         </h3>
         {isOwned && (
-          <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{entry.tagline}</p>
+          <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{entry.tagline}</p>
         )}
 
         {isLocked && (
-          <ul className="mt-3 space-y-1.5 text-[11px] text-muted-foreground">
+          <ul className="mt-2 space-y-1 text-[10px] text-muted-foreground">
             <li className="flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <Star className="h-3 w-3 text-gold" />
-                <span className="uppercase tracking-widest">Difficulty</span>
+              <span className="flex items-center gap-1.5">
+                <Star className="h-2.5 w-2.5 text-gold" />
+                <span className="uppercase tracking-wide">Difficulty</span>
               </span>
               <StarRating value={entry.difficulty} />
             </li>
             <li className="flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <Clock className="h-3 w-3 text-gold" />
-                <span className="uppercase tracking-widest">Play time</span>
+              <span className="flex items-center gap-1.5">
+                <Clock className="h-2.5 w-2.5 text-gold" />
+                <span className="uppercase tracking-wide">Play time</span>
               </span>
               <span className="text-foreground/90">
                 {entry.playMinutes[0]}–{entry.playMinutes[1]} min
               </span>
             </li>
             <li className="flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <FileText className="h-3 w-3 text-gold" />
-                <span className="uppercase tracking-widest">Evidence</span>
+              <span className="flex items-center gap-1.5">
+                <FileText className="h-2.5 w-2.5 text-gold" />
+                <span className="uppercase tracking-wide">Evidence</span>
               </span>
               <span className="text-foreground/90">{entry.evidenceCount}</span>
             </li>
             <li className="flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <Users className="h-3 w-3 text-gold" />
-                <span className="uppercase tracking-widest">Witnesses</span>
+              <span className="flex items-center gap-1.5">
+                <Users className="h-2.5 w-2.5 text-gold" />
+                <span className="uppercase tracking-wide">Witnesses</span>
               </span>
               <span className="text-foreground/90">{entry.witnessCount}</span>
             </li>
@@ -126,8 +126,8 @@ export function CaseCard({ entry, onClick, owned = false, progress = null }: Pro
         )}
 
         {isOwned && progress != null && (
-          <div className="mt-4">
-            <div className="flex items-center justify-between text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
+          <div className="mt-2">
+            <div className="flex items-center justify-between text-[9px] uppercase tracking-wide text-muted-foreground mb-1">
               <span>Progress</span>
               <span className="text-gold">{progress}%</span>
             </div>
@@ -146,9 +146,9 @@ export function CaseCard({ entry, onClick, owned = false, progress = null }: Pro
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
-          className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-md bg-gradient-to-r from-gold-deep to-gold px-2 py-1.5 sm:py-2 text-[10px] sm:text-xs font-semibold uppercase tracking-wider sm:tracking-widest text-background transition hover:brightness-110"
+          className="mt-2 flex w-full items-center justify-center gap-1 rounded-md bg-gradient-to-r from-gold-deep to-gold px-1.5 py-1 sm:py-1.5 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wide text-background transition hover:brightness-110"
         >
-          Solve it Now <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+          Solve it Now <ArrowRight className="h-2.5 w-2.5" />
         </a>
       </div>
     </div>
