@@ -1,4 +1,4 @@
-import { Lock, CheckCircle2, Star, Clock, FileText, Users } from "lucide-react";
+import { Lock, CheckCircle2, Star, Clock, FileText, Users, ArrowRight } from "lucide-react";
 import type { CaseEntry } from "@/lib/catalog";
 
 interface Props {
@@ -6,6 +6,13 @@ interface Props {
   onClick: (entry: CaseEntry) => void;
   owned?: boolean;
   progress?: number | null;
+}
+
+// Builds the Gumroad URL for a case, e.g. "DX-003" -> https://dossierxdx.gumroad.com/l/Dx003
+function getGumroadUrl(code: string): string {
+  const match = code.match(/(\d+)/);
+  const num = match ? match[1].padStart(3, "0") : "001";
+  return `https://dossierxdx.gumroad.com/l/Dx${num}`;
 }
 
 export function CaseCard({ entry, onClick, owned = false, progress = null }: Props) {
@@ -28,9 +35,14 @@ export function CaseCard({ entry, onClick, owned = false, progress = null }: Pro
   }
 
   return (
-    <button
+    <div
+      role="button"
+      tabIndex={0}
       onClick={() => onClick(entry)}
-      className="group relative overflow-hidden rounded-lg border border-border bg-card text-left transition hover:border-gold/50 hover:shadow-[0_20px_60px_-20px_rgba(0,0,0,0.7)]"
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") onClick(entry);
+      }}
+      className="group relative overflow-hidden rounded-lg border border-border bg-card text-left transition hover:border-gold/50 hover:shadow-[0_20px_60px_-20px_rgba(0,0,0,0.7)] cursor-pointer"
     >
       {/* Cover */}
       <div className="relative aspect-[4/3] overflow-hidden bg-background">
@@ -127,8 +139,19 @@ export function CaseCard({ entry, onClick, owned = false, progress = null }: Pro
             </div>
           </div>
         )}
+
+        {/* Solve it Now — links out to Gumroad, doesn't trigger the card's own onClick */}
+        <a
+          href={getGumroadUrl(entry.code)}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-md bg-gradient-to-r from-gold-deep to-gold px-2 py-1.5 sm:py-2 text-[10px] sm:text-xs font-semibold uppercase tracking-wider sm:tracking-widest text-background transition hover:brightness-110"
+        >
+          Solve it Now <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+        </a>
       </div>
-    </button>
+    </div>
   );
 }
 
