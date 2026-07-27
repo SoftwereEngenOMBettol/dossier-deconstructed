@@ -9,40 +9,30 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AppSettingsRouteImport } from './routes/_app.settings'
-import { Route as AppCertificatesRouteImport } from './routes/_app.certificates'
-import { Route as AppCasepacksRouteImport } from './routes/_app.casepacks'
-import { Route as AppArchiveRouteImport } from './routes/_app.archive'
+import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppAchievementsRouteImport } from './routes/_app.achievements'
+import { Route as AppArchiveRouteImport } from './routes/_app.archive'
+import { Route as AppCasepacksRouteImport } from './routes/_app.casepacks'
+import { Route as AppCertificatesRouteImport } from './routes/_app.certificates'
+import { Route as AppSettingsRouteImport } from './routes/_app.settings'
 import { Route as AppCaseCaseIdIndexRouteImport } from './routes/_app.case.$caseId.index'
-import { Route as AppCaseCaseIdSubmitRouteImport } from './routes/_app.case.$caseId.submit'
-import { Route as AppCaseCaseIdCertificateRouteImport } from './routes/_app.case.$caseId.certificate'
 import { Route as AppCaseCaseIdSectionRouteImport } from './routes/_app.case.$caseId.$section'
+import { Route as AppCaseCaseIdCertificateRouteImport } from './routes/_app.case.$caseId.certificate'
+import { Route as AppCaseCaseIdSubmitRouteImport } from './routes/_app.case.$caseId.submit'
 
-const AppRoute = AppRouteImport.update({
-  id: '/_app',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppSettingsRoute = AppSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AppRoute,
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AppCertificatesRoute = AppCertificatesRouteImport.update({
-  id: '/certificates',
-  path: '/certificates',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppCasepacksRoute = AppCasepacksRouteImport.update({
-  id: '/casepacks',
-  path: '/casepacks',
+const AppAchievementsRoute = AppAchievementsRouteImport.update({
+  id: '/achievements',
+  path: '/achievements',
   getParentRoute: () => AppRoute,
 } as any)
 const AppArchiveRoute = AppArchiveRouteImport.update({
@@ -50,9 +40,19 @@ const AppArchiveRoute = AppArchiveRouteImport.update({
   path: '/archive',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAchievementsRoute = AppAchievementsRouteImport.update({
-  id: '/achievements',
-  path: '/achievements',
+const AppCasepacksRoute = AppCasepacksRouteImport.update({
+  id: '/casepacks',
+  path: '/casepacks',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCertificatesRoute = AppCertificatesRouteImport.update({
+  id: '/certificates',
+  path: '/certificates',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => AppRoute,
 } as any)
 const AppCaseCaseIdIndexRoute = AppCaseCaseIdIndexRouteImport.update({
@@ -60,9 +60,9 @@ const AppCaseCaseIdIndexRoute = AppCaseCaseIdIndexRouteImport.update({
   path: '/case/$caseId/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppCaseCaseIdSubmitRoute = AppCaseCaseIdSubmitRouteImport.update({
-  id: '/case/$caseId/submit',
-  path: '/case/$caseId/submit',
+const AppCaseCaseIdSectionRoute = AppCaseCaseIdSectionRouteImport.update({
+  id: '/case/$caseId/$section',
+  path: '/case/$caseId/$section',
   getParentRoute: () => AppRoute,
 } as any)
 const AppCaseCaseIdCertificateRoute =
@@ -71,9 +71,9 @@ const AppCaseCaseIdCertificateRoute =
     path: '/case/$caseId/certificate',
     getParentRoute: () => AppRoute,
   } as any)
-const AppCaseCaseIdSectionRoute = AppCaseCaseIdSectionRouteImport.update({
-  id: '/case/$caseId/$section',
-  path: '/case/$caseId/$section',
+const AppCaseCaseIdSubmitRoute = AppCaseCaseIdSubmitRouteImport.update({
+  id: '/case/$caseId/submit',
+  path: '/case/$caseId/submit',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -162,13 +162,6 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_app': {
-      id: '/_app'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AppRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -176,25 +169,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app/settings': {
-      id: '/_app/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AppSettingsRouteImport
-      parentRoute: typeof AppRoute
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_app/certificates': {
-      id: '/_app/certificates'
-      path: '/certificates'
-      fullPath: '/certificates'
-      preLoaderRoute: typeof AppCertificatesRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/casepacks': {
-      id: '/_app/casepacks'
-      path: '/casepacks'
-      fullPath: '/casepacks'
-      preLoaderRoute: typeof AppCasepacksRouteImport
+    '/_app/achievements': {
+      id: '/_app/achievements'
+      path: '/achievements'
+      fullPath: '/achievements'
+      preLoaderRoute: typeof AppAchievementsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/archive': {
@@ -204,11 +190,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppArchiveRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/achievements': {
-      id: '/_app/achievements'
-      path: '/achievements'
-      fullPath: '/achievements'
-      preLoaderRoute: typeof AppAchievementsRouteImport
+    '/_app/casepacks': {
+      id: '/_app/casepacks'
+      path: '/casepacks'
+      fullPath: '/casepacks'
+      preLoaderRoute: typeof AppCasepacksRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/certificates': {
+      id: '/_app/certificates'
+      path: '/certificates'
+      fullPath: '/certificates'
+      preLoaderRoute: typeof AppCertificatesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/settings': {
+      id: '/_app/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/case/$caseId/': {
@@ -218,11 +218,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppCaseCaseIdIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/case/$caseId/submit': {
-      id: '/_app/case/$caseId/submit'
-      path: '/case/$caseId/submit'
-      fullPath: '/case/$caseId/submit'
-      preLoaderRoute: typeof AppCaseCaseIdSubmitRouteImport
+    '/_app/case/$caseId/$section': {
+      id: '/_app/case/$caseId/$section'
+      path: '/case/$caseId/$section'
+      fullPath: '/case/$caseId/$section'
+      preLoaderRoute: typeof AppCaseCaseIdSectionRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/case/$caseId/certificate': {
@@ -232,11 +232,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppCaseCaseIdCertificateRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/case/$caseId/$section': {
-      id: '/_app/case/$caseId/$section'
-      path: '/case/$caseId/$section'
-      fullPath: '/case/$caseId/$section'
-      preLoaderRoute: typeof AppCaseCaseIdSectionRouteImport
+    '/_app/case/$caseId/submit': {
+      id: '/_app/case/$caseId/submit'
+      path: '/case/$caseId/submit'
+      fullPath: '/case/$caseId/submit'
+      preLoaderRoute: typeof AppCaseCaseIdSubmitRouteImport
       parentRoute: typeof AppRoute
     }
   }
@@ -275,3 +275,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
