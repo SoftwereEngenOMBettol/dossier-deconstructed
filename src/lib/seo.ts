@@ -5,7 +5,7 @@
  * If you attach a custom domain (e.g. dossierx.app), update it here
  * AND in public/robots.txt, public/sitemap.xml, and public/llms.txt.
  */
-export const SITE_URL = "https://dossier-deconstructed.lovable.app";
+export const SITE_URL = "https://dossier-x.lovable.app";
 
 export const SITE_NAME = "DOSSIER X";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
