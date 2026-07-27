@@ -10,9 +10,9 @@ All cases and characters are entirely fictional. The game is single-player and r
 
 - [Home](https://dossier-x.lovable.app/): Create your detective profile and begin your first investigation.
 - [Case Archive](https://dossier-x.lovable.app/archive): Browse all available fictional criminal cases and open an investigation.
-- [Case Packs](https://dossier-deconstructed.lovable.app/casepacks): Import additional downloadable investigation cases.
-- [Achievements](https://dossier-deconstructed.lovable.app/achievements): Track investigation milestones and unlocked badges.
-- [Certificates](https://dossier-deconstructed.lovable.app/certificates): View case-closed certificates earned by solving cases.
+- [Case Packs](https://dossier-x.lovable.app/casepacks): Import additional downloadable investigation cases.
+- [Achievements](https://dossier-x.lovable.app/achievements): Track investigation milestones and unlocked badges.
+- [Certificates](https://dossier-x.lovable.app/certificates): View case-closed certificates earned by solving cases.
 
 ## Topics
 
