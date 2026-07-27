@@ -1,0 +1,21 @@
+# DOSSIER X
+
+> DOSSIER X is a document-driven detective investigation game played in the browser. Players analyze fictional case files — crime scene photos, evidence, suspect dossiers, and witness interviews — then name the culprit and earn a case-closed certificate. No hand-holding: the truth hides in the details.
+
+DOSSIER X is a free web application. Players create a detective profile, open a case from the archive, and work through five investigation sections per case: the briefing, crime scene, evidence board, suspects, and witness statements. Solving a case correctly awards achievements and a printable certificate bearing the detective's name. Additional cases can be imported as downloadable "case packs".
+
+All cases and characters are entirely fictional. The game is single-player and runs locally in the browser; no account is required.
+
+## Pages
+
+- [Home](https://dossier-deconstructed.lovable.app/): Create your detective profile and begin your first investigation.
+- [Case Archive](https://dossier-deconstructed.lovable.app/archive): Browse all available fictional criminal cases and open an investigation.
+- [Case Packs](https://dossier-deconstructed.lovable.app/casepacks): Import additional downloadable investigation cases.
+- [Achievements](https://dossier-deconstructed.lovable.app/achievements): Track investigation milestones and unlocked badges.
+- [Certificates](https://dossier-deconstructed.lovable.app/certificates): View case-closed certificates earned by solving cases.
+
+## Topics
+
+- Detective game, murder mystery game, criminal investigation simulation
+- Fictional case files, evidence analysis, deduction puzzles
+- Browser-based single-player mystery experience

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dossier-deconstructed.lovable.app/sitemap.xml
