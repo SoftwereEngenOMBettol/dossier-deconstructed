@@ -15,6 +15,7 @@ export function Img({
   fallbackSeed,
   fallbackLabel,
   fallbackSub,
+  alt,
   onError,
   ...rest
 }: Props) {
@@ -22,9 +23,14 @@ export function Img({
   const [failed, setFailed] = useState(false);
   useEffect(() => { setFailed(false); }, [src]);
   const finalSrc = !src || failed ? placeholder : src;
+  const finalAlt =
+    alt ?? [fallbackLabel, fallbackSub].filter(Boolean).join(" — ") ?? "";
   return (
     <img
       {...rest}
+      alt={finalAlt}
+      loading={rest.loading ?? "lazy"}
+      decoding="async"
       src={finalSrc}
       onError={(e) => {
         if (!failed) setFailed(true);
